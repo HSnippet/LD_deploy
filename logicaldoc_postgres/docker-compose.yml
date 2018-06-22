@@ -1,0 +1,38 @@
+version: '2'
+
+volumes:
+  database_my:
+    external: true
+  database_pg:
+    external: true
+
+services:
+  
+  postgresld:
+    image: postgres
+    volumes:
+      - database_pg:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports: 
+      - "8093:8081"
+      - "8083:8080"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  logicaldoc:
+    image: logicaldoc
+    environment:
+      - DB_ENGINE=postgres
+      - DOCKER_CLIENT_TIMEOUT=120
+      - COMPOSE_HTTP_TIMEOUT=120
+      - VIRTUAL_HOST=logicaldoc
+      - VIRTUAL_PORT=8081
+    ports:
+      - "8081"
+    links:
+      - postgresld

@@ -1,0 +1,37 @@
+version: '2'
+
+volumes:
+  database_my:
+   external: true
+  database_pg:
+   external: true
+
+services:
+  
+  mysqlld:
+    image: mysql
+    volumes:
+     - database_my:/var/lib/mysql
+    environment:
+     - MYSQL_ROOT_PASSWORD=root
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports: 
+     - "8093:8081"
+     - "8083:8080"
+    volumes:
+     - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  logicaldoc:
+    image: logicaldoc
+    environment:
+     - DB_ENGINE=mysql
+     - DOCKER_CLIENT_TIMEOUT=120
+     - COMPOSE_HTTP_TIMEOUT=120
+     - VIRTUAL_HOST=logicaldoc
+     - VIRTUAL_PORT=8081
+    ports:
+     - "8081"
+    links:
+     - mysqlld
