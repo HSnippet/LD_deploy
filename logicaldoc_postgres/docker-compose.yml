@@ -29,7 +29,7 @@ services:
       - DB_HOST=postres-ld
       - DOCKER_CLIENT_TIMEOUT=120
       - COMPOSE_HTTP_TIMEOUT=120
-      - VIRTUAL_HOST=\${env.BUILD_ID}.logicaldoc.formation.squashtest.fr
+      - VIRTUAL_HOST=logicaldoc.formation.squashtest.fr
       - VIRTUAL_PORT=8081
     ports:
       - "8081"
