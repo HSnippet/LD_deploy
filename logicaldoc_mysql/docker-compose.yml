@@ -16,7 +16,7 @@ services:
   nginx-proxy:
     image: jwilder/nginx-proxy
     ports: 
-     - "8083:8081"
+     - "8083:8080"
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock:ro
 
@@ -27,9 +27,9 @@ services:
      - DB_HOST=mysql-ld
      - DOCKER_CLIENT_TIMEOUT=120
      - COMPOSE_HTTP_TIMEOUT=120
-     - VIRTUAL_HOST=${env.BUILD_ID}.logicaldoc.formation.squashtest.fr
-     - VIRTUAL_PORT=8081
+     - VIRTUAL_HOST=logicaldoc.formation.squashtest.fr
+     - VIRTUAL_PORT=8083
     ports:
-     - "8081"
+     - "8080"
     links:
      - mysql-ld
