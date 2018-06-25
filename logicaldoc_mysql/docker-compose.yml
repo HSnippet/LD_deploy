@@ -3,8 +3,6 @@ version: '2'
 volumes:
   database_my:
    external: true
-  database_pg:
-   external: true
 
 services:
   
@@ -19,7 +17,6 @@ services:
     image: jwilder/nginx-proxy
     ports: 
      - "8083:8081"
-     - "8093:8080"
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock:ro
 
