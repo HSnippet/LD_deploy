@@ -18,8 +18,8 @@ services:
   nginx-proxy:
     image: jwilder/nginx-proxy
     ports: 
-     - "8093:8081"
-     - "8083:8080"
+     - "8083:8081"
+     - "8093:8080"
     volumes:
      - /var/run/docker.sock:/tmp/docker.sock:ro
 
