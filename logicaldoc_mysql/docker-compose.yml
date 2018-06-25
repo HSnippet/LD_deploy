@@ -24,6 +24,7 @@ services:
     image: logicaldoc
     environment:
      - DB_ENGINE=mysql
+     - DB_HOST=mysql-ld
      - DOCKER_CLIENT_TIMEOUT=120
      - COMPOSE_HTTP_TIMEOUT=120
      - VIRTUAL_HOST=${env.BUILD_ID}.logicaldoc.formation.squashtest.fr
