@@ -19,7 +19,7 @@ services:
     environment:
       - COMPOSE_HTTP_TIMEOUT=160
     ports: 
-     - "8083:8080"
+     - "83:8080"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
