@@ -8,8 +8,8 @@ volumes:
 
 services:
   
-  mysqlld:
-    image: mysql
+  mysql-ld:
+    image: mysql:5.7
     volumes:
      - database_my:/var/lib/mysql
     environment:
@@ -34,4 +34,4 @@ services:
     ports:
      - "8081"
     links:
-     - mysqlld
+     - mysql-ld

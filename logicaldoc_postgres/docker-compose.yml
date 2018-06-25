@@ -8,8 +8,8 @@ volumes:
 
 services:
   
-  postgresld:
-    image: postgres
+  postgres-ld:
+    image: postgres:9.6
     volumes:
       - database_pg:/var/lib/postgresql
     environment:
@@ -35,4 +35,4 @@ services:
     ports:
       - "8081"
     links:
-      - postgresld
+      - postgres-ld
