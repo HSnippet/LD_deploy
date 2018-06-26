@@ -9,6 +9,6 @@ services:
       - VIRTUAL_PORT=83
      ports: 
       - "83:83"
- #   volumes:
- #     - /var/run/docker.sock:/tmp/docker.sock:ro
+     volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
       
