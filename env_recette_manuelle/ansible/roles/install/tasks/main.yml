@@ -21,15 +21,15 @@
    name: unzip
    state: present
 
-- name: Télécharge et dezippe SOAP UI
+- name: TÃ©lÃ©charge et dezippe SOAP UI
   unarchive:
    src: https://s3.amazonaws.com/downloads.eviware/soapuios/5.4.0/SoapUI-5.4.0-linux-bin.tar.gz
    dest: /etc
    remote_src: yes
 
-- name: Télécharge et dézippe SquirrelSQL
+- name: TÃ©lÃ©charge et dÃ©zippe SquirrelSQL
   unarchive:
-   src: https://sourceforge.net/projects/squirrel-sql/files/1-stable/3.8.1-plainzip/squirrelsql-3.8.1-standard.zip/download
+   src: https://netix.dl.sourceforge.net/project/squirrel-sql/1-stable/3.8.1-plainzip/squirrelsql-3.8.1-standard.zip
    dest: /etc
    remote_src: yes
 
@@ -55,13 +55,13 @@
    dest: /etc/squirrelsql-3.8.1-standard/lib
    remote_src: true
 
-- name: Télécharge et dezippe OWASP
+- name: TÃ©lÃ©charge et dezippe OWASP
   unarchive: 
    src: https://github.com/zaproxy/zaproxy/releases/download/2.7.0/ZAP_2.7.0_Linux.tar.gz
    dest: /etc
    remote_src: yes
 
-- name: Installe dépendances Chrome
+- name: Installe dependances Chrome
   apt: 
    name: "{{ item }}"
    state: present
@@ -74,14 +74,14 @@
   - libappindicator1
   - libcurl3
 
-- name: Télécharge le .deb de Chrome et l'installe
+- name: Telecharge le .deb de Chrome et l'installe
   apt:
    deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 
-- name: Création d'un profil firefox zaproxy
+- name: Creation d'un profil firefox zaproxy
   shell: |
-   firefox -CreateProfile "zaproxy /etc"
-   cd /etc
+   firefox -CreateProfile "zaproxy /root"
+   cd /root
    echo 'user_pref("network.proxy.http", "127.0.0.1");' >> prefs.js
    echo 'user_pref("network.proxy.http_port", "8080");' >> prefs.js
    echo 'user_pref("network.proxy.type", "1");' >> prefs.js
