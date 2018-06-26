@@ -18,8 +18,9 @@ services:
     image: jwilder/nginx-proxy
     environment:
       - COMPOSE_HTTP_TIMEOUT=160
+      - VIRTUAL_PORT=83
     ports: 
-     - "83:8080"
+      - "83:83"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
