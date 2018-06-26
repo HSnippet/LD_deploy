@@ -7,25 +7,25 @@ networks:
 
 services:
   
-   nginx-proxy:
-     image: jwilder/nginx-proxy
-     container_name: nginx-proxy
-     environment:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    environment:
       - COMPOSE_HTTP_TIMEOUT=160
       - VIRTUAL_PORT=83
-     ports: 
+    ports: 
       - 83:83
       - 8083:8083
-     volumes:
+    volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
      
-    clientdebian:
-     image: clientdebian
-     ports:
-      - 6080:6080
-     networks:
-      - nginx-proxy
-     environment:
-      - VIRTUAL_HOST=clientrecette.formation.squashtest.fr
-      - VIRTUAL_PORT=8080
+  clientdebian:
+    image: clientdebian
+    ports:
+     - 6080:6080
+    networks:
+     - nginx-proxy
+    environment:
+     - VIRTUAL_HOST=clientrecette.formation.squashtest.fr
+     - VIRTUAL_PORT=8080
       
