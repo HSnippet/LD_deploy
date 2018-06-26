@@ -1,8 +1,9 @@
 version: '2'
 
 networks:
-  nginx-proxy:
-    external: true
+  default:
+    external
+      nginx-proxy
 
 services:
   
