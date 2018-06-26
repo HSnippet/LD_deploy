@@ -1,0 +1,9 @@
+version: '3.2'
+services:
+  clientdebian:
+   image: clientdebian
+   ports:
+    - "6080:80"
+#   environment:
+#    - USER=ubuntu
+#    - PASSWORD=ubuntu

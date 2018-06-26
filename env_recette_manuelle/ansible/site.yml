@@ -1,0 +1,4 @@
+- name: Deploiement des environnements clients tests manuels
+  hosts: clients
+  roles:
+  - install 

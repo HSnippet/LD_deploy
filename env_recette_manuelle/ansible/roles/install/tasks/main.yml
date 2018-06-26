@@ -1,0 +1,87 @@
+---
+# tasks file for install
+
+- name: ping les serveurs
+  ping:
+
+- name: Installe Firefox
+  apt:
+   name: firefox
+   state: present
+
+- name: Installe JAVA
+  apt:
+   name: "{{ item }}"
+   state: present
+  with_items:
+  - default-jre
+
+- name: Install unzip
+  apt: 
+   name: unzip
+   state: present
+
+- name: Télécharge et dezippe SOAP UI
+  unarchive:
+   src: https://s3.amazonaws.com/downloads.eviware/soapuios/5.4.0/SoapUI-5.4.0-linux-bin.tar.gz
+   dest: /etc
+   remote_src: yes
+
+- name: Télécharge et dézippe SquirrelSQL
+  unarchive:
+   src: https://sourceforge.net/projects/squirrel-sql/files/1-stable/3.8.1-plainzip/squirrelsql-3.8.1-standard.zip/download
+   dest: /etc
+   remote_src: yes
+
+- name: Attribution de droit d'execution SquirrelSQL
+  file:
+   path: /etc/squirrelsql-3.8.1-standard/squirrel-sql.sh
+   mode: 0744
+
+- name: Placement du driver postgreSQL .jar dans le dossier lib de SquirrelSQL
+  get_url:
+   url: https://jdbc.postgresql.org/download/postgresql-42.2.2.jar
+   dest: /etc/squirrelsql-3.8.1-standard/lib
+
+- name: Telecharge et dezippe mysql connector
+  unarchive:
+   src: https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.11.tar.gz
+   dest: /etc/squirrelsql-3.8.1-standard/lib
+   remote_src: yes
+
+- name: Copie le fichier mysql.jar dans le dossier lib de squirrelSQL
+  copy: 
+   src: /etc/squirrelsql-3.8.1-standard/lib/mysql-connector-java-8.0.11/mysql-connector-java-8.0.11.jar
+   dest: /etc/squirrelsql-3.8.1-standard/lib
+   remote_src: true
+
+- name: Télécharge et dezippe OWASP
+  unarchive: 
+   src: https://github.com/zaproxy/zaproxy/releases/download/2.7.0/ZAP_2.7.0_Linux.tar.gz
+   dest: /etc
+   remote_src: yes
+
+- name: Installe dépendances Chrome
+  apt: 
+   name: "{{ item }}"
+   state: present
+  with_items:
+  - gconf-service
+  - libgconf-2-4
+  - libnspr4 
+  - libnss3 
+  - libpango1.0-0
+  - libappindicator1
+  - libcurl3
+
+- name: Télécharge le .deb de Chrome et l'installe
+  apt:
+   deb: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+- name: Création d'un profil firefox zaproxy
+  shell: |
+   firefox -CreateProfile "zaproxy /etc"
+   cd /etc
+   echo 'user_pref("network.proxy.http", "127.0.0.1");' >> prefs.js
+   echo 'user_pref("network.proxy.http_port", "8080");' >> prefs.js
+   echo 'user_pref("network.proxy.type", "1");' >> prefs.js
