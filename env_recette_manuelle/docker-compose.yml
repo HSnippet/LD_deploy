@@ -8,12 +8,12 @@ services:
   clientdebian:
    image: clientdebian
    ports:
-    - "8080:6080"
+    - 80:6080
    networks:
      - nginx-proxy
    environment:
      - VIRTUAL_HOST=clientrecette.formation.squashtest.fr
-     - VIRTUAL_PORT=8080
+     - VIRTUAL_PORT=80
 #   environment:
 #    - USER=ubuntu
 #    - PASSWORD=ubuntu
