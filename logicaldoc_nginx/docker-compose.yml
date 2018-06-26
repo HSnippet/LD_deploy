@@ -14,7 +14,9 @@ services:
       - COMPOSE_HTTP_TIMEOUT=160
       - VIRTUAL_PORT=83
      ports: 
-      - "83:83"
+      - 83:83
+      - 73:73
+      - 8073:8073
      volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
      
