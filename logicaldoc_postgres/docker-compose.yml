@@ -4,6 +4,11 @@ volumes:
   database_pg:
     external: true
 
+networks:
+  nginx-proxy:
+    external: true
+  db-network:
+    
 services:
   
   postgres-ld:
@@ -13,16 +18,18 @@ services:
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+    networks:
+      - db-network
 
-  nginx-proxy:
-    image: jwilder/nginx-proxy
-    environment:
-      - COMPOSE_HTTP_TIMEOUT=160
-      - VIRTUAL_PORT=83
-    ports: 
-      - "83:83"
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+#  nginx-proxy:
+#    image: jwilder/nginx-proxy
+#    environment:
+#      - COMPOSE_HTTP_TIMEOUT=160
+#      - VIRTUAL_PORT=83
+#    ports: 
+#      - "83:83"
+#    volumes:
+#      - /var/run/docker.sock:/tmp/docker.sock:ro
 
   logicaldoc:
     image: logicaldoc
@@ -39,3 +46,6 @@ services:
       - 8080:8080
     links:
       - postgres-ld
+    networks:
+      - nginx-proxy
+      - db-network

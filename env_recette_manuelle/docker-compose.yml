@@ -1,9 +1,19 @@
 version: '3.2'
+
+networks:
+  nginx-proxy:
+    external: true
+    
 services:
   clientdebian:
    image: clientdebian
    ports:
     - "6080:80"
+   networks:
+     - nginx-proxy
+   environment:
+     - VIRTUAL_HOST=clientrecette.formation.squashtest.fr
+     - VIRTUAL_PORT=8080
 #   environment:
 #    - USER=ubuntu
 #    - PASSWORD=ubuntu
