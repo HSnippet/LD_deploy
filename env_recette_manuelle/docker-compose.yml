@@ -8,7 +8,7 @@ services:
   clientdebian:
    image: clientdebian
    ports:
-    - 6080:8070
+     - 80:80
    networks:
      - nginx-proxy
    environment:
