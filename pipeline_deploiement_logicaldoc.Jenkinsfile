@@ -17,8 +17,8 @@ pipeline {
 			} 
 
 	stages {
-	    
-	    stage ('Deploiement du container du reverse-proxy nginx'){
+		
+		stage ('Deploiement du container du reverse-proxy nginx'){
             steps {
 		        build 'PL_Lancement_RevProxy'
 		    }
@@ -52,45 +52,10 @@ pipeline {
 						echo "Lancement dockercompose postgre $WORKSPACE/logicaldoc_postgres"
 						sh "cd $WORKSPACE/logicaldoc_postgres && docker-compose up -d"
 						}
-					
+					echo "Application LogicalDoc déployée et disponible à cette URL : http://logicaldoc.formation.squashtest.fr:8083/ "
 					}
 					
                 }
 			}
-	
-		stage ('Qualimétrie') {			
-			steps { 
-				echo "Lancement de l'analyse qualimétrique"
-			}
-		}
-	
-	    stage ('Lancement de la recette des web services') {
-			steps {
-                script {
-                   try {
-			            timeout(time: 120, unit: 'SECONDS') {
-				        	echo "Lancement des tests de webservices (SoapUI) "
-				            sh " cd $WORKSPACE/tests_webservices && /home/workspace_G3/SoapUI-5.4.0/bin/testrunner.sh LogicalDoc-soapui-project-Groupe3.xml"
-			            }
-			        } catch (err) {
-			            echo "L'exécution de la campagne de test des webservices LogicalDoc a rencontré des erreurs."
-			           }
-                }
-			}      
-	    }
-	    
-		stage ('Deprovisionnement de l\'environnement TNRA') {
-		    steps {
-               script {
-					if ("$db_type" == 'mysql') {
-				        echo "Arrêt containers mysql "
-						sh "cd $WORKSPACE/logicaldoc_mysql && docker-compose down"
-						} else if ("$db_type" == 'postgres') {
-						echo "Arrêt containers postgre"
-						sh "cd $WORKSPACE/logicaldoc_postgres && docker-compose down"
-						}
-				    }
-				}
-		}
     }
 }

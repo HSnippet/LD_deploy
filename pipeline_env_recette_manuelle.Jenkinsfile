@@ -18,7 +18,13 @@ pipeline {
 
 	stages {
 		
-		stage ('Deploiement containers avec Docker-compose') {
+		stage ('Deploiement du container du reverse-proxy nginx'){
+            steps {
+		        build 'PL_Lancement_RevProxy'
+		    }
+		}
+		
+		stage ('Deploiement de l\'application LogicalDoc et de sa base de données') {
 			
 			steps { 
 				script {
@@ -43,17 +49,18 @@ pipeline {
 					}
                 }
 	
-		stage ('Passage infos vers Ansible') {			
+		stage ('Transmission des coordonnées des containers à Ansible') {			
 			steps { 
 				 sh """echo "[clients]\n\$(docker ps -qf name='envman_*') ansible_connection=docker" > $WORKSPACE/env_recette_manuelle/ansible/hosts"""
 			}
 		}
 	  
-		stage ('Lancement Ansible') {
+		stage ('Lancement de la configuration des postes par Ansible') {
 	
 	        steps { 
 				echo "Lancement préparation postes avec Ansible"
 	            sh "cd $WORKSPACE/env_recette_manuelle/ansible/ && ansible-playbook -i hosts site.yml"
+	            echo "Postes configurés avec succès"
 	        }	
 	}
 }
