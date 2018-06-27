@@ -27,7 +27,8 @@ services:
      - DB_HOST=mysql-ld
      - DOCKER_CLIENT_TIMEOUT=120
      - COMPOSE_HTTP_TIMEOUT=120
-     - VIRTUAL_HOST=logicaldoc.formation.squashtest.fr
+     - HTTP_PORT=8080
+     - VIRTUAL_HOST=mylogicaldoc.formation.squashtest.fr
      - VIRTUAL_PORT=8080
     ports:
      - 8080:8080
