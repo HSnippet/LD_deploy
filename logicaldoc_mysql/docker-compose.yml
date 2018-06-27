@@ -4,6 +4,11 @@ volumes:
   database_my:
    external: true
 
+networks:
+  nginx-proxy:
+    external: true
+  db-network:
+  
 services:
   
   mysql-ld:
@@ -12,6 +17,8 @@ services:
      - database_my:/var/lib/mysql
     environment:
      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - db-network
 
   logicaldoc:
     image: logicaldoc
@@ -26,3 +33,6 @@ services:
      - 8080:8080
     links:
      - mysql-ld
+    networks:
+      - nginx-proxy
+      - db-network
